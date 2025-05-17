@@ -1,4 +1,4 @@
-if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
+-- if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
 
 -- AstroCore provides a central place to modify mappings, vim options, autocommands, and more!
 -- Configuration documentation can be found with `:h astrocore`
@@ -38,9 +38,22 @@ return {
       },
     },
     -- vim options can be configured here
+    autocmds = {
+      auto_close_fugitive = {
+        {
+          event = "FileType",
+          desc = "Close fugitiveblame",
+          pattern = { "fugitiveblame", "fugitive" },
+          callback = function()
+            vim.keymap.set("n", "q", "<cmd>quit<CR>", { expr = false, noremap = true, buffer = true, desc = "Close" })
+            -- vim.keymap.set("n", "D", "dd", { expr = false, noremap = true, buffer = true, desc = "Close" }) -- this doesn't work
+          end,
+        }
+      },
+    },
     options = {
       opt = { -- vim.opt.<key>
-        relativenumber = true, -- sets vim.opt.relativenumber
+        relativenumber = false, -- sets vim.opt.relativenumber
         number = true, -- sets vim.opt.number
         spell = false, -- sets vim.opt.spell
         signcolumn = "yes", -- sets vim.opt.signcolumn to yes
@@ -72,6 +85,19 @@ return {
           end,
           desc = "Close buffer from tabline",
         },
+
+        [",c"] = { function() require("astrocore.buffer").close() end, desc = "Close buffer" },
+        [",<TAB>"] = { ":b#<CR>", desc = "Switch to previous buffer" },
+
+        -- ref: "<Leader>fW" https://github.com/AstroNvim/AstroNvim/blob/main/lua/astronvim/plugins/snacks.lua
+        [",s"] = {
+          function() require("snacks").picker.grep { hidden = true, ignored = true } end,
+          desc = "Find words in all files",
+        },
+
+        [",f"] = { function() require("snacks").picker.smart() end, desc = "Find buffers/recent/files" },
+
+        [",gs"] = { ":G<CR>", desc = "Git status" },
 
         -- tables with just a `desc` key will be registered with which-key if it's installed
         -- this is useful for naming menus
