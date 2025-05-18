@@ -58,6 +58,8 @@ return {
         spell = false, -- sets vim.opt.spell
         signcolumn = "yes", -- sets vim.opt.signcolumn to yes
         wrap = false, -- sets vim.opt.wrap
+        tw = 80,
+        colorcolumn = "+1", -- highlight the 81st column
       },
       g = { -- vim.g.<key>
         -- configure global vim variables (vim.g)
@@ -98,6 +100,7 @@ return {
         [",f"] = { function() require("snacks").picker.smart() end, desc = "Find buffers/recent/files" },
 
         [",gs"] = { ":G<CR>", desc = "Git status" },
+        [",gp"] = { "<cmd>Git push<CR>", desc = "Git push" },
 
         -- tables with just a `desc` key will be registered with which-key if it's installed
         -- this is useful for naming menus
