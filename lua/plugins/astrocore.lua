@@ -97,7 +97,10 @@ return {
           desc = "Find words in all files",
         },
 
+        [",b"] = { function() require("snacks").picker.buffers() end, desc = "Find buffers" },
         [",f"] = { function() require("snacks").picker.smart() end, desc = "Find buffers/recent/files" },
+        [",m"] = { function() require("snacks").picker.recent() end, desc = "Find old files" },
+        [",r"] = { function() require("snacks").picker.resume() end, desc = "Resume previous search" },
 
         [",gs"] = { ":G<CR>", desc = "Git status" },
         [",gp"] = { "<cmd>Git push<CR>", desc = "Git push" },
